@@ -61,7 +61,7 @@
                 // JSON data of bare servers
                 const bareServerData = {
                     "servers": [
-                        "https://tomp.app/",
+                        "https://wisp.rhw.one/api/bare/",
                         "https://phantomnetwork.cloud/bare/",
                         "https://artclass.site/bare/",
                         "https://shuttleproxy.com/bare/"
