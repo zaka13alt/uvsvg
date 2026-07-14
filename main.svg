@@ -51,7 +51,7 @@
             </div>
 
             <footer style="text-align: center; margin-top: 20px;">
-                <span title="discord.gg/unblock">Ultraviolet &#169; TN 2023</span>
+                <span title="discord.gg/unblock">Ultraviolet © TN 2023</span>
             </footer>
 
             <script src="uv/uv.bundle.js"></script>
@@ -85,13 +85,44 @@
                 document.getElementById('bareServerSelect').addEventListener('change', () => {
                     const selectedServer = document.getElementById('bareServerSelect').value;
                     console.log(`Selected server: ${selectedServer}`);
-                    // You can take further action with the selected server here
                 });
 
-                // Populate the dropdown on page load
+                // Blob Service Worker Registration Logic
+                async function registerBlobServiceWorker() {
+                    if (!('serviceWorker' in navigator)) {
+                        console.error('Service workers are not supported in this browser.');
+                        return;
+                    }
+
+                    try {
+                        const targetUrl = 'https://cdn.jsdelivr.net/gh/zaka13alt/uvsvg@main/sw.js';
+                        console.log('Fetching Service Worker script from CDN...');
+                        
+                        const response = await fetch(targetUrl);
+                        if (!response.ok) throw new Error(`HTTP error! Status: ${response.status}`);
+                        
+                        const scriptText = await response.text();
+                        
+                        // Create a blob representing the script content locally
+                        const blob = new Blob([scriptText], { type: 'application/javascript' });
+                        const blobUrl = URL.createObjectURL(blob);
+                        
+                        console.log('Registering local blob Service Worker...');
+                        const registration = await navigator.serviceWorker.register(blobUrl, {
+                            scope: '/uv/service/'
+                        });
+                        
+                        console.log('Service Worker registered successfully via Blob Method:', registration);
+                    } catch (error) {
+                        console.error('Failed to register Service Worker using Blob Method:', error);
+                    }
+                }
+
+                // Populate elements and initialize registration on load
                 window.addEventListener('load', () => {
                     populateDropdown();
                     console.log('Dropdown menu populated.');
+                    registerBlobServiceWorker();
                 });
             //]]>
             </script>
