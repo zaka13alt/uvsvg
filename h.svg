@@ -1,0 +1,122 @@
+<svg xmlns="http://w3.org" width="100%" height="100%" viewBox="0 0 800 600">
+    <foreignObject width="100%" height="100%">
+        <html xmlns="http://w3.org">
+        <head>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+            <title>Ultraviolet | Sophisticated Web Proxy</title>
+            <meta name="description" content="Ultraviolet is a highly sophisticated proxy used for evading internet censorship or accessing websites in a controlled sandbox using the power of service-workers. Unblock sites today!" />
+            <meta name="keywords" content="proxy, web proxy, ultraviolet, service workers, unblock websites, unblock chromebook, free web proxy, proxy list, proxy sites, un block chromebook, online proxy, proxy server, proxysite, proxy youtube, bypass securly, bypass iboss, bypass lightspeed filter, holy unblocker, chromebooks, titanium network, unblock youtube, youtube proxy, unblocked youtube, youtube unblocked" />
+            <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#434c5e" />
+            <meta name="googlebot" content="index, follow, snippet" />
+            <link href="index.css" rel="stylesheet" />
+            <style>
+                #bareServerSelect {
+                    width: 200px;
+                }
+
+                body {
+                    color: white;
+                    font-family: sans-serif;
+                    background-color: #1a1a1a;
+                    margin: 0;
+                    padding: 20px;
+                }
+                
+                .center-container {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: column;
+                }
+            </style>
+        </head>
+        <body>
+            <h1 style="text-align: center;">OutRed Static Proxy</h1>
+            <div class="desc">
+                <p style="text-align: center;">Ultraviolet is highly sophisticated proxy used for evading internet censorship.</p>
+            </div>
+
+            <div class="center-container">
+                <select id="bareServerSelect"></select>
+                <br />
+                <form id="proxyForm">
+                    <input id="proxyInput" placeholder="Search the web freely" style="width: 300px; padding: 10px; margin-bottom: 10px;" />
+                    <button type="submit" style="padding: 10px;">Go</button>
+                </form>
+            </div>
+
+            <footer style="text-align: center; margin-top: 20px;">
+                <span>Ultraviolet © TN 2026</span>
+            </footer>
+
+            <script src="uv/uv.bundle.js"></script>
+            <script src="uv/uv.config.js"></script>
+            <script>
+            //<![CDATA[
+                const bareServerData = {
+                    "servers": [
+                        "https://rhw.one",
+                        "https://phantomnetwork.cloud",
+                        "https://artclass.site",
+                        "https://shuttleproxy.com"
+                    ]
+                };
+
+                function populateDropdown() {
+                    const select = document.getElementById('bareServerSelect');
+                    bareServerData.servers.forEach((server) => {
+                        const option = document.createElement('option');
+                        option.value = server;
+                        option.textContent = server;
+                        select.appendChild(option);
+                    });
+                }
+
+                // Dynamic Fetch & Intercept Execution Method
+                async function loadProxyService() {
+                    try {
+                        const cdnWorkerUrl = 'https://cdn.jsdelivr.net/gh/zaka13alt/uvsvg@main/sw.js';
+                        console.log('Fetching main proxy core from jsDelivr...');
+                        
+                        const response = await fetch(cdnWorkerUrl);
+                        const scriptText = await response.text();
+
+                        // Intercept the browser's worker registration method directly
+                        const originalRegister = navigator.serviceWorker.register;
+                        navigator.serviceWorker.register = async function(url, options) {
+                            console.log("Intercepted registration attempt. Scope target:", options.scope);
+                            
+                            // Injecting the raw downloaded jsDelivr configuration text into local scope execution
+                            const fallbackBlob = new Blob([
+                                `importScripts('${cdnWorkerUrl}');`
+                            ], { type: 'text/javascript' });
+                            
+                            // Creates an internal script proxy configuration mapping to bypass path limits
+                            const dummyWorkerUrl = URL.createObjectURL(fallbackBlob);
+                            return originalRegister.call(navigator, dummyWorkerUrl, { scope: options.scope || '/uv/service/' });
+                        };
+
+                        // Fallback fallback triggering standard registration under local scope rules
+                        if ('serviceWorker' in navigator) {
+                            navigator.serviceWorker.register('/uv/service/sw.js', { scope: '/uv/service/' })
+                            .then(() => console.log("Proxy worker context verified and bound."))
+                            .catch(err => console.warn("Interception hook applied. Waiting for request initialization...", err));
+                        }
+
+                    } catch (err) {
+                        console.error("Failed to map the remote worker execution pipeline:", err);
+                    }
+                }
+
+                window.addEventListener('load', () => {
+                    populateDropdown();
+                    loadProxyService();
+                });
+            //]]>
+            </script>
+            <script src="index.js"></script>
+        </body>
+        </html>
+    </foreignObject>
+</svg>
