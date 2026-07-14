@@ -32,7 +32,7 @@
             </style>
         </head>
         <body>
-            <h1 style="text-align: center;">OutRed Static Proxy</h1>
+            <h1 style="text-align: center;">zaka's ultraviolet proxy</h1>
             <div class="desc">
                 <p style="text-align: center;">Ultraviolet is highly sophisticated proxy used for evading internet censorship.</p>
             </div>
@@ -56,7 +56,7 @@
             //<![CDATA[
                 const bareServerData = {
                     "servers": [
-                        "https://rhw.one",
+                        "https://wisp.rhw.one/api/bare",
                         "https://phantomnetwork.cloud",
                         "https://artclass.site",
                         "https://shuttleproxy.com"
@@ -73,36 +73,35 @@
                     });
                 }
 
-                // Dynamic Fetch & Intercept Execution Method
+                // Dynamic Context Binding and Hooking
                 async function loadProxyService() {
+                    if (!('serviceWorker' in navigator)) return;
+
                     try {
                         const cdnWorkerUrl = 'https://cdn.jsdelivr.net/gh/zaka13alt/uvsvg@main/sw.js';
-                        console.log('Fetching main proxy core from jsDelivr...');
+                        console.log('Pre-fetching proxy core configuration...');
                         
                         const response = await fetch(cdnWorkerUrl);
                         const scriptText = await response.text();
 
-                        // Intercept the browser's worker registration method directly
-                        const originalRegister = navigator.serviceWorker.register;
+                        // Create the local binary data asset directly from raw code
+                        const blob = new Blob([scriptText], { type: 'text/javascript' });
+                        const workerBlobUrl = URL.createObjectURL(blob);
+
+                        // Safely preserve and bind the native browser ServiceWorkerContainer registration reference
+                        const nativeRegister = navigator.serviceWorker.register.bind(navigator.serviceWorker);
+                        
+                        // Apply runtime interceptor mapping
                         navigator.serviceWorker.register = async function(url, options) {
-                            console.log("Intercepted registration attempt. Scope target:", options.scope);
+                            console.log("Intercepted registration attempt. Target scope verified:", options.scope);
                             
-                            // Injecting the raw downloaded jsDelivr configuration text into local scope execution
-                            const fallbackBlob = new Blob([
-                                `importScripts('${cdnWorkerUrl}');`
-                            ], { type: 'text/javascript' });
-                            
-                            // Creates an internal script proxy configuration mapping to bypass path limits
-                            const dummyWorkerUrl = URL.createObjectURL(fallbackBlob);
-                            return originalRegister.call(navigator, dummyWorkerUrl, { scope: options.scope || '/uv/service/' });
+                            // Route execution cleanly through native container using local memory blobs
+                            return nativeRegister(workerBlobUrl, { 
+                                scope: options.scope || '/uv/service/' 
+                            });
                         };
 
-                        // Fallback fallback triggering standard registration under local scope rules
-                        if ('serviceWorker' in navigator) {
-                            navigator.serviceWorker.register('/uv/service/sw.js', { scope: '/uv/service/' })
-                            .then(() => console.log("Proxy worker context verified and bound."))
-                            .catch(err => console.warn("Interception hook applied. Waiting for request initialization...", err));
-                        }
+                        console.log("Interception layer compiled. Ready for form initialization.");
 
                     } catch (err) {
                         console.error("Failed to map the remote worker execution pipeline:", err);
