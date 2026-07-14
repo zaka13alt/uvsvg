@@ -25,7 +25,7 @@
             </style>
         </head>
         <body>
-            <h1 style="text-align: center;">uv-svg (by zaka)</h1>
+            <h1 style="text-align: center;">zaka's uv-svg</h1>
             <div class="center-container">
                 <select id="bareServerSelect"></select>
                 <br />
@@ -35,11 +35,10 @@
                 </form>
             </div>
 
-            <!-- Dynamic script elements built out of 5 distinct pieces -->
+            <!--  -->
             <script>
             //<![CDATA[
                 (function() {
-                    // Part 1: uv.bundle.js split into 5 pieces
                     const p1_1 = "https://cdn.jsdelivr.net/";
                     const p1_2 = "gh/zaka13alt/";
                     const p1_3 = "uvsvg@main/";
@@ -50,7 +49,6 @@
                     scr1.src = p1_1 + p1_2 + p1_3 + p1_4 + p1_5;
                     document.body.appendChild(scr1);
 
-                    // Part 2: uv.config.js split into 5 pieces
                     const p2_1 = "https://cdn.";
                     const p2_2 = "jsdelivr.net/gh/";
                     const p2_3 = "zaka13alt/uvsvg";
@@ -68,7 +66,7 @@
             //<![CDATA[
                 const bareServerData = {
                     "servers": [
-                        "https://wisp.rhw.one/api/bare",
+                        "https://rhw.one",
                         "https://phantomnetwork.cloud",
                         "https://artclass.site",
                         "https://shuttleproxy.com"
@@ -85,7 +83,6 @@
                     });
                 }
 
-                // Resolves current folder structure path context
                 const BASE_PATH = location.pathname.replace(/\/[^\/]*$/, "/");
 
                 async function registerLocalUV() {
@@ -95,26 +92,11 @@
                     }
 
                     try {
-                        // Dynamically override register hooks to point to explicit absolute CDN resources 
-                        // instead of broken relative lookups inside the hosted file layout.
-                        const nativeRegister = navigator.serviceWorker.register.bind(navigator.serviceWorker);
-                        
-                        navigator.serviceWorker.register = async function(url, options) {
-                            // Target path broken down safely to avoid truncation
-                            const sw1 = "https://cdn.jsdelivr.net/";
-                            const sw2 = "gh/zaka13alt/";
-                            const sw3 = "uvsvg@main/";
-                            const sw4 = "sw";
-                            const sw5 = ".js";
-                            
-                            return nativeRegister(sw1 + sw2 + sw3 + sw4 + sw5, {
-                                scope: BASE_PATH + "uv/service/"
-                            });
-                        };
-
-                        // Initialize execution fallback
-                        const registration = await navigator.serviceWorker.register(BASE_PATH + "sw.js");
-                        console.log("Ultraviolet Interceptor active under scope:", registration.scope);
+                        // Register the freshly updated sw.js file under local folder scope matching your Scramjet example
+                        const registration = await navigator.serviceWorker.register(BASE_PATH + "sw.js", {
+                            scope: BASE_PATH + "uv/service/"
+                        });
+                        console.log("Ultraviolet Proxy Context active under scope:", registration.scope);
                     } catch (err) {
                         console.error("Local registration check failed:", err);
                     }
