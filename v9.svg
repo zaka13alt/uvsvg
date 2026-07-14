@@ -1,0 +1,227 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 800 600">
+    <foreignObject width="100%" height="100%">
+        <html xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+            <title>Ultraviolet | Sophisticated Web Proxy</title>
+            <meta name="description" content="Ultraviolet is a highly sophisticated proxy used for evading internet censorship or accessing websites in a controlled sandbox using the power of service-workers. Unblock sites today!" />
+            <meta name="keywords" content="proxy, web proxy, ultraviolet, service workers, unblock websites, unblock chromebook, free web proxy, proxy list, proxy sites, un block chromebook, online proxy, proxy server, proxysite, proxy youtube, bypass securly, bypass iboss, bypass lightspeed filter, holy unblocker, chromebooks, titanium network, unblock youtube, youtube proxy, unblocked youtube, youtube unblocked" />
+            <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#434c5e" />
+            <meta name="googlebot" content="index, follow, snippet" />
+            <link href="index.css" rel="stylesheet" />
+            <style>
+                #bareServerSelect {
+                    width: 200px;
+                }
+
+                body {
+                    color: white;
+                    font-family: sans-serif;
+                    background-color: #1a1a1a;
+                    margin: 0;
+                    padding: 20px;
+                }
+                
+                .center-container {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: column;
+                }
+            </style>
+        </head>
+        <body>
+            <h1 style="text-align: center;" title="Ultraviolet supports YouTube, GeForce NOW and more! Service by TitaniumNetwork.">OutRed Static Proxy</h1>
+            <div title="Ultraviolet uses the power of service-workers and more! Unblock many sites today with Ultraviolet!" class="desc">
+                <p style="text-align: center;">Ultraviolet is highly sophisticated proxy used for evading internet censorship.</p>
+            </div>
+
+            <div class="center-container">
+                <!-- Dropdown menu -->
+                <select id="bareServerSelect">
+                    <!-- Options will be populated dynamically using JavaScript -->
+                </select>
+                <br />
+
+                <form id="proxyForm">
+                    <input id="proxyInput" placeholder="Search the web freely" style="width: 300px; padding: 10px; margin-bottom: 10px;" />
+                    <button type="submit" style="padding: 10px; display: none;">Go</button>
+                </form>
+            </div>
+
+            <footer style="text-align: center; margin-top: 20px;">
+                <span title="discord.gg/unblock">Ultraviolet © TN 2026</span>
+            </footer>
+
+            <!-- Inject all configuration layers using 5-part string fragment matrices -->
+            <script>
+            //<![CDATA[
+                window.addEventListener('DOMContentLoaded', () => {
+                    const cdnBase = "https://cdn.jsdelivr.net/";
+
+                    // 1. Ultraviolet Bundle
+                    const uv1_1 = cdnBase;
+                    const uv1_2 = "npm/@titaniumnetwork";
+                    const uv1_3 = "-dev/ultraviolet@";
+                    const uv1_4 = "3.2.7/dist/uv.";
+                    const uv1_5 = "bundle.js";
+                    const scr1 = document.createElement('script');
+                    scr1.src = uv1_1 + uv1_2 + uv1_3 + uv1_4 + uv1_5;
+                    document.body.appendChild(scr1);
+
+                    // 2. Ultraviolet Config
+                    const uv2_1 = cdnBase;
+                    const uv2_2 = "npm/@titaniumnetwork";
+                    const uv2_3 = "-dev/ultraviolet@";
+                    const uv2_4 = "3.2.7/dist/uv.";
+                    const uv2_5 = "config.js";
+                    const scr2 = document.createElement('script');
+                    scr2.src = uv2_1 + uv2_2 + uv2_3 + uv2_4 + uv2_5;
+                    document.body.appendChild(scr2);
+                    // 3. MercuryWorkshop Bare Mux Client
+                    const bm1 = cdnBase;
+                    const bm2 = "npm/@mercuryworkshop";
+                    const bm3 = "/bare-mux@";
+                    const bm4 = "latest/dist/";
+                    const bm5 = "index.js";
+                    const scr3 = document.createElement('script');
+                    scr3.src = bm1 + bm2 + bm3 + bm4 + bm5;
+                    document.body.appendChild(scr3);
+
+                    // 4. MercuryWorkshop Libcurl Transport Client
+                    const lc1 = cdnBase;
+                    const lc2 = "npm/@mercuryworkshop";
+                    const lc3 = "/libcurl-transport";
+                    const lc4 = "@latest/dist/";
+                    const lc5 = "index.js";
+                    const scr4 = document.createElement('script');
+                    scr4.src = lc1 + lc2 + lc3 + lc4 + lc5;
+                    document.body.appendChild(scr4);
+                });
+            //]]>
+            </script>
+
+            <script>
+            //<![CDATA[
+                // JSON data updated to reflect the new dynamic transport pipeline structure
+                const bareServerData = {
+                    "servers": [
+                        "wss://wisp.rhw.one/v1/"
+                    ]
+                };
+
+                // Function to populate the dropdown menu
+                function populateDropdown() {
+                    const select = document.getElementById('bareServerSelect');
+                    const servers = bareServerData.servers;
+
+                    servers.forEach((server) => {
+                        const option = document.createElement('option');
+                        option.value = server;
+                        option.textContent = server;
+                        select.appendChild(option);
+                    });
+                }
+                // Event listener to handle user selection and console messages
+                document.getElementById('bareServerSelect').addEventListener('change', () => {
+                    const selectedServer = document.getElementById('bareServerSelect').value;
+                    console.log(`Selected server: ${selectedServer}`);
+                });
+
+                const BASE_PATH = location.pathname.replace(/\/[^\/]*$/, "/");
+
+                async function initializeCdnProxy() {
+                    if (!navigator.serviceWorker) {
+                        console.error("Service Workers not supported.");
+                        return;
+                    }
+
+                    try {
+                        const cdn = "https://cdn.jsdelivr.net/";
+                        const pkg = "npm/@titaniumnetwork-dev/ultraviolet@3.2.7/dist/";
+
+                        const bundleUrl = cdn + pkg + "uv.bundle.js";
+                        const configUrl = cdn + pkg + "uv.config.js";
+                        const swCoreUrl = cdn + pkg + "uv.sw.js";
+                        const bareMuxUrl = "https://cdn.jsdelivr.net/npm/@mercuryworkshop/bare-mux@2.0.4/dist/index.js";
+
+                        // Create an in-memory execution bridge containing correct absolute path imports
+                        const workerBlobCode = `
+                            importScripts('${bundleUrl}');
+                            importScripts('${configUrl}');
+                            importScripts('${swCoreUrl}');
+                            importScripts('${bareMuxUrl}');
+                            const sw = new UVServiceWorker();
+                            self.addEventListener('fetch', event => event.respondWith(sw.fetch(event)));
+                        `;
+                        
+                        const blob = new Blob([workerBlobCode], { type: 'application/javascript' });
+                        const blobWorkerUrl = URL.createObjectURL(blob);
+
+                        // Safely preserve and bind native register context
+                        const nativeRegister = navigator.serviceWorker.register.bind(navigator.serviceWorker);
+                        
+                        // Force override registration mappings globally
+                        navigator.serviceWorker.register = async function(url, options) {
+                            return nativeRegister(blobWorkerUrl, {
+                                scope: BASE_PATH + "uv/service/"
+                            });
+                        };
+                        // Register dummy handler location over scope layer
+                        const registration = await navigator.serviceWorker.register(BASE_PATH + "sw.js");
+                        console.log("Ultraviolet CDN Interceptor registered:", registration.scope);
+                        
+                        setupFormHandlers();
+                    } catch (err) {
+                        console.error("Local registration check failed:", err);
+                    }
+                }
+
+                async function setupFormHandlers() {
+                    if (window.BareMux && window.LibcurlTransport && window.Ultraviolet) {
+                        try {
+                            const selectedServer = document.getElementById('bareServerSelect').value || bareServerData.servers[0];
+                            const connection = new BareMux.BareMuxConnection("/baremux/");
+                            await connection.setTransport("/libcurl/index.js", [{ wisp: selectedServer }]);
+                            console.log("Proxy Active. Network Bound.");
+                            
+                            // Form submission listener mapping
+                            document.getElementById('proxyForm').addEventListener('submit', e => {
+                                e.preventDefault();
+                                const inputVal = document.getElementById('proxyInput').value.trim();
+                                if (!inputVal) return;
+
+                                let targetUrl = inputVal;
+                                if (!/^https?:\/\//i.test(targetUrl)) {
+                                    if (targetUrl.includes('.') && !targetUrl.includes(' ')) {
+                                        targetUrl = 'https://' + targetUrl;
+                                    } else {
+                                        targetUrl = 'https://html.duckduckgo.com/?q=' + encodeURIComponent(targetUrl);
+                                    }
+                                }
+
+                                // Encodes and redirects window target context directly into sandbox prefix bounds
+                                const prefix = BASE_PATH + "uv/service/";
+                                location.href = prefix + Ultraviolet.codec.xor.encode(targetUrl);
+                            });
+                        } catch(e) {
+                            console.error(e);
+                        }
+                    } else {
+                        // Retry loop waiting for all CDN elements to finish execution tracking asynchronously
+                        setTimeout(setupFormHandlers, 100);
+                    }
+                }
+
+                window.addEventListener('load', () => {
+                    populateDropdown();
+                    console.log('Dropdown menu populated.');
+                    initializeCdnProxy();
+                });
+            //]]>
+            </script>
+        </body>
+        </html>
+    </foreignObject>
+</svg>
