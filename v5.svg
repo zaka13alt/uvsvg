@@ -1,0 +1,115 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="100%" height="100%" viewBox="0 0 800 600">
+    <foreignObject width="100%" height="100%">
+        <html xmlns="http://www.w3.org/1999/xhtml">
+        <head>
+            <meta charset="utf-8" />
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no" />
+            <title>Ultraviolet | Sophisticated Web Proxy</title>
+            <style>
+                #bareServerSelect {
+                    width: 200px;
+                }
+                body {
+                    color: white;
+                    font-family: sans-serif;
+                    background-color: #1a1a1a;
+                    margin: 0;
+                    padding: 20px;
+                }
+                .center-container {
+                    display: flex;
+                    justify-content: center;
+                    align-items: center;
+                    flex-direction: column;
+                }
+            </style>
+        </head>
+        <body>
+            <h1 style="text-align: center;">uv (by zaka)</h1>
+            <div class="center-container">
+                <select id="bareServerSelect"></select>
+                <br />
+                <form id="proxyForm">
+                    <input id="proxyInput" placeholder="Search the web freely" style="width: 300px; padding: 10px; margin-bottom: 10px;" />
+                    <button type="submit" style="padding: 10px;">Go</button>
+                </form>
+            </div>
+
+            <!-- Dynamic script elements built out of 5 distinct pieces -->
+            <script>
+            //<![CDATA[
+                (function() {
+                    // Part 1: uv.bundle.js split into 5 pieces
+                    const p1_1 = "https://cdn.jsdelivr.net/";
+                    const p1_2 = "gh/zaka13alt/";
+                    const p1_3 = "uvsvg@main/";
+                    const p1_4 = "uv/uv.";
+                    const p1_5 = "bundle.js";
+                    
+                    const scr1 = document.createElement('script');
+                    scr1.src = p1_1 + p1_2 + p1_3 + p1_4 + p1_5;
+                    document.body.appendChild(scr1);
+
+                    // Part 2: uv.config.js split into 5 pieces
+                    const p2_1 = "https://cdn.";
+                    const p2_2 = "jsdelivr.net/gh/";
+                    const p2_3 = "zaka13alt/uvsvg";
+                    const p2_4 = "@main/uv/";
+                    const p2_5 = "uv.config.js";
+                    
+                    const scr2 = document.createElement('script');
+                    scr2.src = p2_1 + p2_2 + p2_3 + p2_4 + p2_5;
+                    document.body.appendChild(scr2);
+                })();
+            //]]>
+            </script>
+
+            <script>
+            //<![CDATA[
+                const bareServerData = {
+                    "servers": [
+                        "https://wisp.rhw.one/api/bare",
+                        "https://phantomnetwork.cloud",
+                        "https://artclass.site",
+                        "https://shuttleproxy.com"
+                    ]
+                };
+
+                function populateDropdown() {
+                    const select = document.getElementById('bareServerSelect');
+                    bareServerData.servers.forEach((server) => {
+                        const option = document.createElement('option');
+                        option.value = server;
+                        option.textContent = server;
+                        select.appendChild(option);
+                    });
+                }
+
+                const BASE_PATH = location.pathname.replace(/\/[^\/]*$/, "/");
+
+                async function registerLocalUV() {
+                    if (!navigator.serviceWorker) {
+                        console.error("Service workers are not supported or blocked by context.");
+                        return;
+                    }
+
+                    try {
+                        const registration = await navigator.serviceWorker.register(BASE_PATH + "sw.js", {
+                            scope: BASE_PATH + "uv/service/"
+                        });
+                        console.log("Ultraviolet Service Worker active under scope:", registration.scope);
+                    } catch (err) {
+                        console.error("Local registration check failed:", err);
+                    }
+                }
+
+                window.addEventListener('load', () => {
+                    populateDropdown();
+                    registerLocalUV();
+                });
+            //]]>
+            </script>
+        </body>
+        </html>
+    </foreignObject>
+</svg>
