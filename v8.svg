@@ -35,10 +35,11 @@
                 </form>
             </div>
 
-            <!--  -->
+            <!-- Scripts execute safely after DOM completion -->
             <script>
             //<![CDATA[
-                (function() {
+                window.addEventListener('DOMContentLoaded', () => {
+                    // Part 1: uv.bundle.js split into 5 pieces
                     const p1_1 = "https://cdn.jsdelivr.net/";
                     const p1_2 = "gh/zaka13alt/";
                     const p1_3 = "uvsvg@main/";
@@ -49,6 +50,7 @@
                     scr1.src = p1_1 + p1_2 + p1_3 + p1_4 + p1_5;
                     document.body.appendChild(scr1);
 
+                    // Part 2: uv.config.js split into 5 pieces
                     const p2_1 = "https://cdn.";
                     const p2_2 = "jsdelivr.net/gh/";
                     const p2_3 = "zaka13alt/uvsvg";
@@ -58,7 +60,7 @@
                     const scr2 = document.createElement('script');
                     scr2.src = p2_1 + p2_2 + p2_3 + p2_4 + p2_5;
                     document.body.appendChild(scr2);
-                })();
+                });
             //]]>
             </script>
 
@@ -92,7 +94,6 @@
                     }
 
                     try {
-                        // Register the freshly updated sw.js file under local folder scope matching your Scramjet example
                         const registration = await navigator.serviceWorker.register(BASE_PATH + "sw.js", {
                             scope: BASE_PATH + "uv/service/"
                         });
