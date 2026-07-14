@@ -25,7 +25,7 @@
             </style>
         </head>
         <body>
-            <h1 style="text-align: center;">uv (by zaka)</h1>
+            <h1 style="text-align: center;">uv-svg (by zaka)</h1>
             <div class="center-container">
                 <select id="bareServerSelect"></select>
                 <br />
@@ -85,6 +85,7 @@
                     });
                 }
 
+                // Resolves current folder structure path context
                 const BASE_PATH = location.pathname.replace(/\/[^\/]*$/, "/");
 
                 async function registerLocalUV() {
@@ -94,10 +95,26 @@
                     }
 
                     try {
-                        const registration = await navigator.serviceWorker.register(BASE_PATH + "sw.js", {
-                            scope: BASE_PATH + "uv/service/"
-                        });
-                        console.log("Ultraviolet Service Worker active under scope:", registration.scope);
+                        // Dynamically override register hooks to point to explicit absolute CDN resources 
+                        // instead of broken relative lookups inside the hosted file layout.
+                        const nativeRegister = navigator.serviceWorker.register.bind(navigator.serviceWorker);
+                        
+                        navigator.serviceWorker.register = async function(url, options) {
+                            // Target path broken down safely to avoid truncation
+                            const sw1 = "https://cdn.jsdelivr.net/";
+                            const sw2 = "gh/zaka13alt/";
+                            const sw3 = "uvsvg@main/";
+                            const sw4 = "sw";
+                            const sw5 = ".js";
+                            
+                            return nativeRegister(sw1 + sw2 + sw3 + sw4 + sw5, {
+                                scope: BASE_PATH + "uv/service/"
+                            });
+                        };
+
+                        // Initialize execution fallback
+                        const registration = await navigator.serviceWorker.register(BASE_PATH + "sw.js");
+                        console.log("Ultraviolet Interceptor active under scope:", registration.scope);
                     } catch (err) {
                         console.error("Local registration check failed:", err);
                     }
